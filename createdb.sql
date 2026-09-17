@@ -2,6 +2,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS people;
 DROP TABLE IF EXISTS professors;
 SET FOREIGN_KEY_CHECKS = 1;
+DROP TABLE IF EXISTS students;
 
 CREATE TABLE people (
     person_id INT AUTO_INCREMENT,
@@ -22,3 +23,15 @@ CREATE TABLE professors (
     FOREIGN KEY (professor_id) REFERENCES people(person_id)
 );
 
+-- Recuerde hacer el DROP de esta tabla al principio del script
+
+-- definición de people
+
+-- definición de professors
+
+CREATE TABLE students (
+    student_id INT,
+    access_method VARCHAR(20) NOT NULL,
+    PRIMARY KEY (student_id),
+    FOREIGN KEY (student_id) REFERENCES people(person_id)
+);

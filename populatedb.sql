@@ -3,6 +3,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 DELETE FROM people;
 DELETE FROM professors;
 SET FOREIGN_KEY_CHECKS = 1;
+DELETE FROM students;
 	
 INSERT INTO people (person_id, dni, first_name, last_name, age, email) VALUES
     (1, '00000001A', 'David', 'Ruiz', 50, 'druiz@us.es'),
@@ -41,5 +42,31 @@ INSERT INTO professors (professor_id, category) VALUES
     (3, 'AyudanteDoctor'),
     (4, 'Titular'),
     (5, 'Ayudante');
+
+
+
+-- Recuerde hacer primero el DELETE de los datos.
+
+INSERT INTO students (student_id, access_method) VALUES
+    (6, 'Selectividad'),
+    (7, 'Selectividad'),
+    (8, 'Selectividad'),
+    (9, 'Selectividad'),
+    (10, 'Selectividad'),
+    (11, 'Selectividad'),
+    (12, 'Selectividad'),
+    (13, 'Selectividad'),
+    (14, 'Selectividad'),
+    (15, 'Selectividad'),
+    (16, 'Selectividad'),
+    (17, 'Selectividad'),
+    (18, 'Selectividad'),
+    (19, 'Selectividad'),
+    (20, 'Selectividad'),
+    (21, 'Selectividad'),
+    (22, 'Selectividad'),
+    (23, 'Selectividad'),
+    (24, 'Selectividad'),
+    (25, 'Selectividad');
 
 
