@@ -1,4 +1,7 @@
+SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS people;
+DROP TABLE IF EXISTS professors;
+SET FOREIGN_KEY_CHECKS = 1;
 
 CREATE TABLE people (
     person_id INT AUTO_INCREMENT,
@@ -9,3 +12,13 @@ CREATE TABLE people (
     email VARCHAR(255) NOT NULL,
     PRIMARY KEY (person_id)
 );
+
+-- Definción tabla people
+
+CREATE TABLE professors (
+    professor_id INT,
+    category VARCHAR(30) NOT NULL,
+    PRIMARY KEY (professor_id),
+    FOREIGN KEY (professor_id) REFERENCES people(person_id)
+);
+
