@@ -188,7 +188,10 @@ INSERT INTO teaching_loads (professor_id, group_id, credits) VALUES
 INSERT INTO people (dni, first_name, last_name, age, email)
 VALUES ('88888888A', 'Ana', 'Test', 25, 'ana@test.es');
 
-INSERT INTO people (dni, first_name, last_name, age, email)
-VALUES ('88888888A', 'Pedro', 'Test', 30, 'pedro@test.es');
+INSERT INTO people (person_id, dni, first_name, last_name, age, email)
+VALUES (1000, '11111111A', 'Carlos', 'Profesor', 45, 'carlos@us.es');
+
+INSERT INTO professors (professor_id, category)
+VALUES (1000, 'Adjunto');
 
 
