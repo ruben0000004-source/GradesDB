@@ -115,4 +115,6 @@ ALTER TABLE professors
 ALTER TABLE students
 	ADD CONSTRAINT ck_students_access_method CHECK (access_method IN ('Selectivdad', 'Ciclo', 'Mayor', 'Titulado', 'Extranjero'));
 	
-	
+ALTER TABLE degrees
+	ADD CONSTRAINT rn13_degree_duration CHECK (duration_years BETWEEN 3 AND 6),
+	ADD CONSTRAINT rn_uq_degrees_name UNIQUE (degree_name);
