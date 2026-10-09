@@ -63,7 +63,7 @@ CREATE TABLE GROUPS(
 	activity VARCHAR(15) NOT NULL,
 	academic_year YEAR NOT NULL,
 	PRIMARY KEY (group_id),
-	FOREIGN KEY (subject_id) REFERENCES subjects(subject_id)
+	FOREIGN KEY (subject_id) REFERENCES subjects(subject_id) ON DELETE CASCADE
 );
 
 CREATE TABLE group_enrollments (
@@ -113,7 +113,10 @@ ALTER TABLE professors
 	ADD CONSTRAINT ck_professors_category CHECK (category IN ('Ayudante', 'AyudanteDoctor', 'Titular', 'Catedrático'));
 
 ALTER TABLE students
-	ADD CONSTRAINT ck_students_access_method CHECK (access_method IN ('Selectivdad', 'Ciclo', 'Mayor', 'Titulado', 'Extranjero'));
+    ADD CONSTRAINT ck_students_access_method CHECK (
+        access_method IN ('Selectividad','Ciclo','Mayor','Titulado','Extranjero')
+    );
+
 	
 ALTER TABLE degrees
 	ADD CONSTRAINT rn13_degree_duration CHECK (duration_years BETWEEN 3 AND 6),
@@ -138,3 +141,4 @@ ALTER TABLE grades
 	ADD CONSTRAINT rn11_grades_value CHECK (grade_value BETWEEN 0 AND 10),
 	ADD CONSTRAINT rn01_grades_with_honors CHECK (with_honors = 0 OR grade_value >= 9),
 	ADD CONSTRAINT rn18_grades_exam_call CHECK (exam_call IN ('Primera', 'Segunda', 'Tercera', 'Extraordinaria'));
+
