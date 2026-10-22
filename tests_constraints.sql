@@ -23,3 +23,21 @@ BEGIN
 	VALUES (p_test_id, SUBSTRING_INDEX(p_message, ':', 1), p_message, p_status);
 END //
 DELIMITER ;
+
+
+-- TEST RN01
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE p_test_rn01_mh_requirement()
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+		CALL p_log_test('RN01', 'RN01: MH necesita una nota >= 9', 'PASS');
+		CALL p_populate();
+		UPDATE grades
+			SET with_honors = 1
+			WHERE grade_id = 21;
+		
+		CALL p_log_test('RN01', 'ERROR: Se permitió MH con una nota inferior a 9', 'FAIL');
+		
+END //
+DELIMITER ;
