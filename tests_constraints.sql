@@ -58,3 +58,20 @@ BEGIN
 	CALL p_log_test('RN09', 'ERROR: Hay atributos obligatorios que son NULL', 'FAIL');
 END //
 DELIMITER ;
+
+
+-- TEST RN10
+DELIMITER //
+CREATE OR REPLACE PROCEDURE p_test_rn10_subject_credits()
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	CALL p_log_test('RN10', 'RN10: Los créditos de una asignatura solamente pueden ser 6 o 12', 'PASS');
+	
+	CALL p_populate();
+	
+	INSERT INTO subjects(subject_id, degree_id, subject_name, acronym, credits, course, subject_type)
+	VALUES (31, 3, 'Asignatura Inválida', 'AI', 8, 2, 'Obligatoria');
+	
+	CALL p_log_test('RN10', 'ERROR: Se permitió una asignatura con créditos inválidos', 'FAIL');
+END //
+DELIMITER ;
