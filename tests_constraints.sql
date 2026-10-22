@@ -94,3 +94,21 @@ BEGIN
 	CALL p_log_test('RN11', 'ERROR: Hay una nota fuera de rango', 'FAIL');
 END // 
 DELIMITER ;
+
+
+-- TEST RN12
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE p_test_rn12_people_age()
+BEGIN 
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	CALL p_log_test('RN12', 'RN12: La edad debe ser un valor comprendido entre 16 y 70', 'PASS');
+	
+	CALL p_populate();
+	
+	INSERT INTO people(person_id, dni, first_name, last_name, age, email)
+	VALUES (105, '20000005E', 'Edad', 'Fuera', 80, 'edad@alum.us.es');
+	
+	CALL p_log_test('RN12', 'ERROR: Hay una edad fuera de rango','FAIL');
+END //
+DELIMITER ;
