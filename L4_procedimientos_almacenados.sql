@@ -59,8 +59,23 @@ SELECT COUNT(*) AS total_people FROM people;
 
 -- EJEMPLO 3 <-> student_average
 
+DELIMITER //
+CREATE OR REPLACE PROCEDURE p_student_average(IN p_student_id INT, OUT p_average DECIMAL(4,2))
+BEGIN 
+	SELECT AVG(grade_value) INTO p_average
+	FROM grades
+	WHERE student_id = p_student_id;
+END //
+DELIMITER ;
+
 -- EJECUCIÓN 3
 
+CALL p_student_average(6, @avg_student_6);
+SELECT @avg_student_6 AS 'Promedio estudiante 6';
+
+CALL p_student_average(7, @avg_student_7);
+CALL p_student_average(8, @avg_student_8);
+SELECT @avg_student_6, @avg_student_7, @avg_student_8;
 
 
 -- EJEMPLO 4 <-> boost_group_grades
