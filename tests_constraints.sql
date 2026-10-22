@@ -41,3 +41,20 @@ BEGIN
 		
 END //
 DELIMITER ;
+
+
+-- TEST RN09
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE p_test_rn09_not_null_attributes()
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+		CALL p_log_test('RN09', 'RN09: Los atributos obligatorios no pueden ser NULL', 'PASS');
+	CALL p_populate();
+	
+	INSERT INTO people(person_id, dni, first_name, last_name, age, email)
+	VALUES (103, '20000003C', NULL, 'Campos', 22, 'null@alum.us.es');
+	
+	CALL p_log_test('RN09', 'ERROR: Hay atributos obligatorios que son NULL', 'FAIL');
+END //
+DELIMITER ;
