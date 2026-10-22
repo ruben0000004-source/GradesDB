@@ -61,6 +61,7 @@ DELIMITER ;
 
 
 -- TEST RN10
+
 DELIMITER //
 CREATE OR REPLACE PROCEDURE p_test_rn10_subject_credits()
 BEGIN
@@ -74,4 +75,22 @@ BEGIN
 	
 	CALL p_log_test('RN10', 'ERROR: Se permitió una asignatura con créditos inválidos', 'FAIL');
 END //
+DELIMITER ;
+
+
+-- TEST RN11
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE p_test_rn11_grade_range()
+BEGIN 
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	CALL p_log_test('RN11', 'RN11: La nota debe ser mayor o igual a 0 y menor o igual a 10', 'PASS');
+	
+	CALL p_populate();
+	
+	INSERT INTO grades (grade_id, student_id, group_id, grade_value, exam_call, with_honors)
+	VALUES (201, 6, 1, 11.0, 'Primera', 0);
+	
+	CALL p_log_test('RN11', 'ERROR: Hay una nota fuera de rango', 'FAIL');
+END // 
 DELIMITER ;
