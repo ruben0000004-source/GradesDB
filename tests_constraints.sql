@@ -112,3 +112,21 @@ BEGIN
 	CALL p_log_test('RN12', 'ERROR: Hay una edad fuera de rango','FAIL');
 END //
 DELIMITER ;
+
+
+-- TEST RN14
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE p_test_rn14_dni_format()
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	CALL p_log_test('RN14','RN14: El DNI debe estar compuesto por 8 dígitos y una letra', 'PASS');
+	
+	CALL p_populate();
+	
+	INSERT INTO people(person_id, dni, first_name, last_name, age, email)
+	VALUES (106, 'INVALIDO', 'DNI', 'Incorrecto', 30, 'dni@alum.us.es');
+		
+	CALL p_log_test('RN14', 'ERROR: DNI con formato inválido','FAIL');
+END //
+DELIMITER ;
