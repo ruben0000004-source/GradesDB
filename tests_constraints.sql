@@ -148,3 +148,21 @@ BEGIN
 	CALL p_log_test('RN15', 'ERROR: Año académico no válido','FAIL');
 END //
 DELIMITER ;
+
+
+-- TEST RN16
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE p_test_rn16_course_range()
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	CALL p_log_test('RN15','RN15: El curso de una asignatura debe ser un número entre 1 y 6','PASS');
+	
+	CALL p_populate();
+	
+	INSERT INTO subjects(subject_id, degree_id, subject_name, acronym, credits, course, subject_type)
+	VALUES(30,3,'Asignatura','A',6,0,'Obligatoria');
+	
+	CALL p_log_test('RN16','ERROR: Curso fuera de rango','FAIL');
+END //
+DELIMITER ;
