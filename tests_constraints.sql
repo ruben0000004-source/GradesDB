@@ -130,3 +130,21 @@ BEGIN
 	CALL p_log_test('RN14', 'ERROR: DNI con formato inválido','FAIL');
 END //
 DELIMITER ;
+
+
+-- TEST RN15
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE p_test_rn15_academic_year()
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	CALL p_log_test('RN15','RN15: El año académico debe estar entre 2000 y 2100','PASS');
+	
+	CALL p_populate();
+	
+	INSERT INTO groups(group_id, subject_id, activity, academic_year)
+	VALUES (20,12,'MD-T2025','Teoría',1000);
+	
+	CALL p_log_test('RN15', 'ERROR: Año académico no válido','FAIL');
+END //
+DELIMITER ;
