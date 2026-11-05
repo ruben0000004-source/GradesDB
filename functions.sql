@@ -29,3 +29,33 @@ FROM people p
 JOIN students s ON s.student_id = p.person_id
 WHERE f_student_average(s.student_id) >= 7.0;
 
+
+-- EJEMPLO 2
+
+DELIMITER //
+CREATE OR REPLACE FUNCTION f_is_student_enrolled(
+	p_student_id INT,
+	p_subject_id INT)
+	
+RETURNS BOOLEAN 
+DETERMINISTIC
+READS SQL DATA
+BEGIN 
+	DECLARE v_exists INT;
+	SELECT COUNT(*) INTO v_exists
+	FROM subject_enrollments
+	WHERE student_id = p_student_id
+	AND subject_id = p_subject_id;
+	RETURN v_exists > 0;
+END //
+DELIMITER ;
+
+-- EJECUCIÓN 2
+
+SELECT s.subject_id, s.subject_name, f_is_student_enrolled(6, s.subject_id) AS matriculado
+FROM subjects s
+WHERE s.degree_id = 3;
+
+SELECT s.subject_name
+FROM subjects s
+WHERE f_is_student_enrolled(6, s.subject_id) = TRUE;
