@@ -97,7 +97,7 @@ WHERE f_subject_group_limit_reached(s.subject_id, 'Teoría', 2025) = TRUE;
 -- Función: f_student_group_limit
 
 DELIMITER //
-CREATE OR REPLACE f_student_group_limit(
+CREATE OR REPLACE FUNCTION f_student_group_limit(
 	p_student_id INT, 
 	p_subject_id INT, 
 	p_activity VARCHAR(15)
@@ -105,14 +105,15 @@ CREATE OR REPLACE f_student_group_limit(
 RETURNS BOOLEAN 
 DETERMINISTIC
 READS SQL DATA
+
 BEGIN
 	DECLARE v_count INT;
 	SELECT COUNT(*) INTO v_count
 	FROM group_enrollments ge
-	JOIN GROUPS g ON g.group_id = ge.group_id
-	WHERE ge.student_id =  p_student_id
-	AND g.subject_id = p_subject_id
-	AND g.activity = p_activity;
+	JOIN groups g ON g.group_id = ge.group_id
+	WHERE ge.student_id = p_student_id
+		AND g.subject_id = p_subject_id
+		AND g.activity = p_activity;
 	
 	RETURN v_count >= 1;
 END //
