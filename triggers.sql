@@ -67,3 +67,17 @@ BEGIN
 	END IF;
 END //
 DELIMITER ;
+
+-- Trigger RN05
+
+DELIMITER //
+CREATE OR REPLACE TRIGGER t_bu_grades_rn05
+BEFORE UPDATE ON grades
+FOR EACH ROW
+BEGIN
+	IF ABS(NEW.grade_value - OLD.grade_value) > 4 THEN
+		SIGNAL SQLSTATE '45000'
+			SET MESSAGE_TEXT = 'RN05: No se puede modificar la nota en más de 4 puntos';
+	END IF; 
+END //
+DELIMITER ; 
