@@ -1,5 +1,6 @@
 USE grados;
 
+
 -- Trigger RN08
 
 DELIMITER //
@@ -17,6 +18,7 @@ BEGIN
 	END if;
 END //
 DELIMITER ;				 
+
 
 -- Trigger RN02
 
@@ -36,6 +38,7 @@ BEGIN
 	END IF;
 END //
 DELIMITER ;
+
 
 -- Trigger RN17
 
@@ -68,6 +71,7 @@ BEGIN
 END //
 DELIMITER ;
 
+
 -- Trigger RN05
 
 DELIMITER //
@@ -81,6 +85,7 @@ BEGIN
 	END IF; 
 END //
 DELIMITER ;
+
 
 -- Trigger RN03
 
@@ -102,6 +107,7 @@ BEGIN
    END IF;
 END //
 DELIMITER ; 
+
 
 -- Triggers RN04 y RN07
 
@@ -139,6 +145,7 @@ BEGIN
 	END IF;
 END //
 DELIMITER ;
+
 
 -- Trigger RN06
 
