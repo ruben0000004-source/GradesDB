@@ -1,0 +1,32 @@
+-- REPEATABLE READ
+
+SET SESSION TRANSACTION
+ISOLATION LEVEL REPEATABLE READ;
+START TRANSACTION;
+
+SELECT grade_value FROM grades
+WHERE grade_id = 3;
+
+SELECT grade_value FROM grades
+WHERE grade_id = 3;
+
+COMMIT;
+SELECT grade_value FROM grades
+WHERE grade_id = 3;
+
+
+-- READ COMMITTED
+
+SET SESSION TRANSACTION
+ISOLATION LEVEL READ COMMITTED;
+START TRANSACTION;
+
+SELECT grade_value FROM grades
+WHERE grade_id = 3;
+
+SELECT grade_value FROM grades
+WHERE grade_id = 3;
+
+COMMIT;
+SELECT grade_value FROM grades
+WHERE grade_id = 3;
