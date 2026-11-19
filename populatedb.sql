@@ -1,9 +1,9 @@
 USE grados;
 
+
 DELIMITER //
 CREATE OR REPLACE PROCEDURE p_populate()
 BEGIN
-    -- Sin comprobar claves ajenas, las tablas se pueden vaciar en cualquier orden
     SET FOREIGN_KEY_CHECKS = 0;
     DELETE FROM grades;
     DELETE FROM teaching_loads;
@@ -17,8 +17,6 @@ BEGIN
     DELETE FROM degrees;
     SET FOREIGN_KEY_CHECKS = 1;
 
-    -- Los ids se indican explícitamente para que los tests y las consultas
-    -- puedan referirse a filas concretas
     INSERT INTO degrees (degree_id, degree_name, duration_years) VALUES
         (1, 'Ingeniería del Software', 4),
         (2, 'Ingeniería de Computadores', 4),
