@@ -1,7 +1,5 @@
 USE grados;
 
--- Borra todos los datos y carga los iniciales. Los tests lo llaman antes de
--- cada prueba para partir siempre de los mismos datos
 DELIMITER //
 CREATE OR REPLACE PROCEDURE p_populate()
 BEGIN
