@@ -59,3 +59,64 @@ CALL p_insert_degree_subject(
 SELECT * FROM DEGREES WHERE degree_name = 'Grado en Ciberseguridad';
 SELECT * FROM subjects WHERE subject_name = 'Redes Neuronales';
 
+
+-- CON TRANSACCIÓN
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE p_insert_degree_subject_transactional(
+	IN p_degree_name VARCHAR(80),
+	IN p_degree_years TINYINT,
+	IN p_subject_name VARCHAR(120),
+	IN p_subject_acronym VARCHAR(12),
+	IN p_subject_credits TINYINT,
+	IN p_subject_course TINYINT,
+	IN p_subject_type VARCHAR(30)
+)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+		RESIGNAL;
+	END;
+	
+	START TRANSACTION;
+	
+	CALL p_insert_degree_subject(p_degree_name, p_degree_years, p_subject_name, p_subject_acronym, p_subject_credits, p_subject_course, p_subject_type);
+	
+	COMMIT;
+END //
+DELIMITER ;
+
+-- DATOS
+
+CALL p_populate();
+
+CALL p_insert_degree_subject_transactional(
+	'Grado en Inteligencia Artificial',
+	4,
+	'Aprendizaje Automático',
+	'AA',
+	6,
+	3,
+	'Obligatoria'
+);
+
+SELECT * FROM DEGREES WHERE degree_name = 'Grado en Inteligencia Artificial';
+SELECT * FROM subjects WHERE acronym = 'AA';
+
+-- DATOS ERRÓNEOS
+
+CALL p_populate();
+
+CALL p_insert_degree_subject_transactional(
+	'Grado en Ciberseguridad',
+	4,
+	'Redes Neuronales',
+	'FP',
+	6,
+	3,
+	'Obligatoria'
+);
+
+SELECT * FROM DEGREES WHERE degree_name = 'Grado en Ciberseguridad';
+SELECT * FROM subjects WHERE subject_name = 'Redes Neuronales';
